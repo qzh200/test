@@ -1,4 +1,4 @@
-import './search.css'
+import '../css/search.css'
 import {useState} from 'react';
 
 function Search() {
