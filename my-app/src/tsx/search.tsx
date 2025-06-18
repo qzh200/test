@@ -1,5 +1,9 @@
-import '../css/search.css'
-import {useState} from 'react';
+import {useState, type SetStateAction} from 'react';
+import {Layout, Card, Input, Button, Checkbox, List, Typography, Space} from 'antd';
+
+const {Title} = Typography;
+const {Content} = Layout;
+import CustomHeader from './header';
 
 function Search() {
     const [searchTerm, setSearchTerm] = useState('');
@@ -17,49 +21,61 @@ function Search() {
         window.location.href = "https://cn.bing.com/search?q=" + searchTerm;
     }
     return (
-        <div className="search-container">
-            <div className="search-header">
-                <h1 className="search-title">这是一个搜索框</h1>
-                <div className="search-controls">
-                    <div className="bing-toggle">
-                        <label>
-                            <input 
-                                type="checkbox" 
+        <Layout style={{minHeight: '100vh'}}>
+            <CustomHeader/>
+            <Content style={{padding: '24px'}}>
+                <Card headerStyle={{ textAlign: 'center' }} style={{ maxWidth: 800, margin: '0 auto' }}>
+                  <div style={{ textAlign: 'center', padding: '20px' }}>
+                    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+                        <Title level={3}>这是一个搜索框</Title>
+                        <Space direction="vertical" size="middle">
+                            <Checkbox
                                 checked={useBing}
-                                onChange={(e) => setUseBing(e.target.checked)}
-                            />
-                            <span>使用Bing搜索</span>
-                        </label>
-                    </div>
-                    <div className="search-box">
-                        <input
-                            type="text"
-                            placeholder="输入搜索内容..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="search-input"
-                        />
-                        <button 
-                            onClick={useBing ? searchbing : handleSearch}
-                            className="search-button"
-                        >
-                            搜索
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div className="search-results">
-                {searchResults.length > 0 ? (
-                    <ul className="results-list">
-                        {searchResults.map((result, index) => (
-                            <li key={index} className="result-item">{result}</li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p className="no-results">没有找到匹配的结果</p>
-                )}
-            </div>
-        </div>
+                                onChange={(e: {
+                                    target: { checked: boolean | ((prevState: boolean) => boolean); };
+                                }) => setUseBing(e.target.checked)}
+                            >
+                                使用Bing搜索
+                            </Checkbox>
+
+                            <Space.Compact style={{width: '100%'}}>
+                                <Input
+                                    placeholder="输入搜索内容..."
+                                    value={searchTerm}
+                                    onChange={(e: { target: { value: SetStateAction<string>; }; }) => setSearchTerm(e.target.value)}
+                                    onPressEnter={useBing ? searchbing : handleSearch}
+                                />
+                                <Button
+                                    type="primary"
+                                    onClick={useBing ? searchbing : handleSearch}
+                                >
+                                    搜索
+                                </Button>
+                            </Space.Compact>
+                        </Space>
+
+                        <div className="search-results">
+                            {searchResults.length > 0 ? (
+                                <List
+                                    dataSource={searchResults}
+                                    bordered
+                                    renderItem={(item, index) => (
+                                        <List.Item key={index}>
+                                            <Typography.Text>{item}</Typography.Text>
+                                        </List.Item>
+                                    )}
+                                />
+                            ) : (
+                                <div style={{ textAlign: 'center', padding: '24px' }}>
+                                    没有找到匹配的结果
+                                </div>
+                            )}
+                        </div>
+                    </Space>
+                  </div>
+                </Card>
+            </Content>
+        </Layout>
     );
 }
 

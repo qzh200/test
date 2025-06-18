@@ -1,9 +1,11 @@
-import { useState } from 'react';
-import { Layout, Typography, Row, Col, Card, Button, Space } from 'antd';
-const { Header, Content } = Layout;
-const { Title, Text } = Typography;
+import {useState} from 'react';
+import {Typography, Row, Col, Card, Button, Space} from 'antd';
+import CustomHeader from './header';
 
-function TicTacToe(){
+const {Title, Text} = Typography;
+
+
+function TicTacToe() {
     const [currentPlayer, setCurrentPlayer] = useState<'X' | 'O'>('X');
     const [gameBoard, setGameBoard] = useState<string[]>(Array(9).fill(''));
     const [gameActive, setGameActive] = useState(true);
@@ -69,39 +71,36 @@ function TicTacToe(){
     };
 
     return (
-        <Layout style={{ minHeight: '100vh', padding: '24px' }}>
-            <Header style={{ background: 'transparent', textAlign: 'center' }}>
-                <Title level={2}>井字棋游戏</Title>
-            </Header>
-            
-            <Content style={{ padding: '24px' }}>
-                <Space direction="vertical" size="large" style={{ width: '100%' }}>
-                     <Card title="游戏介绍" style={{ width: '100%' }}>
-                         <Text>
-                             井字棋，英文名叫Tic-Tac-Toe，是一种在3*3格子上进行的连珠游戏，和五子棋类似，由于棋盘一般不画边框，格线排成井字故得名。游戏需要的工具仅为纸和笔，然后由分别代表O和X的两个游戏者轮流在格子里留下标记（一般来说先手者为X），任意三个标记形成一条直线，则为获胜。
-                         </Text>
-                     </Card>
-                     
-                     <Card title="游戏规则" style={{ width: '100%' }}>
-                         <Text>
-                             1. 游戏双方依次在格子里留下标记（一般来说，可以使用"X"和"O"），第一个在横、竖或斜对角方向形成线的人获胜；
-                             <br />
-                             2. 如果所有格子都被填满，游戏以平局结束。
-                         </Text>
-                     </Card>
-                 </Space>
-                
-                <Space direction="vertical" size="large" style={{ width: '100%', marginTop: '24px' }}>
-                    <Title level={4} style={{ textAlign: 'center' }}>当前玩家: {currentPlayer}</Title>
-                    
-                    <Row justify="center" gutter={[16, 16]} style={{ maxWidth: '500px', margin: '0 auto' }}>
+        <>
+                <CustomHeader>
+                </CustomHeader>
+                <Space direction="vertical" size="large" style={{width: '100%'}}>
+                    <Card title="游戏介绍" style={{width: '100%'}}>
+                        <Text>
+                            井字棋，英文名叫Tic-Tac-Toe，是一种在3*3格子上进行的连珠游戏，和五子棋类似，由于棋盘一般不画边框，格线排成井字故得名。游戏需要的工具仅为纸和笔，然后由分别代表O和X的两个游戏者轮流在格子里留下标记（一般来说先手者为X），任意三个标记形成一条直线，则为获胜。
+                        </Text>
+                    </Card>
+
+                    <Card title="游戏规则" style={{width: '100%'}}>
+                        <Text>
+                            1. 游戏双方依次在格子里留下标记（一般来说，可以使用"X"和"O"），第一个在横、竖或斜对角方向形成线的人获胜；
+                            <br/>
+                            2. 如果所有格子都被填满，游戏以平局结束。
+                        </Text>
+                    </Card>
+                </Space>
+
+                <Space direction="vertical" size="large" style={{width: '100%', marginTop: '24px'}}>
+                    <Title level={4} style={{textAlign: 'center'}}>当前玩家: {currentPlayer}</Title>
+
+                    <Row justify="center" gutter={[16, 16]} style={{maxWidth: '500px', margin: '0 auto'}}>
                         {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((index) => (
                             <Col span={8} key={index}>
-                                <Button 
-                                    type="text" 
-                                    style={{ 
-                                        width: '100%', 
-                                        height: '80px', 
+                                <Button
+                                    type="text"
+                                    style={{
+                                        width: '100%',
+                                        height: '80px',
                                         fontSize: '24px',
                                         border: '1px solid #d9d9d9'
                                     }}
@@ -120,18 +119,18 @@ function TicTacToe(){
                             </Col>
                         ))}
                     </Row>
-                    
-                    <Button 
-                        type="primary" 
-                        size="large" 
-                        style={{ display: 'block', margin: '24px auto' }}
+
+                    <Button
+                        type="primary"
+                        size="large"
+                        style={{display: 'block', margin: '24px auto'}}
                         onClick={resetGame}
                     >
                         重置游戏
                     </Button>
                 </Space>
-            </Content>
-        </Layout>
+        </>
     );
 }
+
 export default TicTacToe;
